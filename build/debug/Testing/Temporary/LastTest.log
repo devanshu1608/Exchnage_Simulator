@@ -1,0 +1,47 @@
+Start testing: Jul 11 21:40 UTC
+----------------------------------------------------------
+1/1 Testing: test_spsc
+1/1 Test: test_spsc
+Command: "/home/thirdcook/Simulator/build/debug/tests/test_spsc"
+Directory: /home/thirdcook/Simulator/build/debug/tests
+"test_spsc" start time: Jul 11 21:40 UTC
+Output:
+----------------------------------------------------------
+=== SPSC Queue Tests ===
+
+  [RUN]  empty_on_creation
+  [PASS] empty_on_creation
+  [RUN]  single_push_pop
+  [PASS] single_push_pop
+  [RUN]  fill_to_capacity
+  [PASS] fill_to_capacity
+  [RUN]  pop_from_empty_fails
+  [PASS] pop_from_empty_fails
+  [RUN]  fifo_ordering
+  [PASS] fifo_ordering
+  [RUN]  wrap_around
+  [PASS] wrap_around
+  [RUN]  move_semantics
+  [PASS] move_semantics
+  [RUN]  blocking_push_pop
+  [PASS] blocking_push_pop
+  [RUN]  struct_element
+  [PASS] struct_element
+  [RUN]  concurrent_correctness
+  [PASS] concurrent_correctness
+  [RUN]  concurrent_throughput
+    Throughput: 104.55 M ops/sec (9.6 ns/op)
+  [PASS] concurrent_throughput
+  [RUN]  size_accuracy
+  [PASS] size_accuracy
+
+=== Results: 12 passed, 0 failed ===
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"test_spsc" end time: Jul 11 21:40 UTC
+"test_spsc" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jul 11 21:40 UTC

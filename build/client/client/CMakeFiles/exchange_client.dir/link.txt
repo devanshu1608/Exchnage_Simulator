@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/exchange_client.dir/src/main.cpp.o -o exchange_client  ../libexchange_net.a -lpthread 

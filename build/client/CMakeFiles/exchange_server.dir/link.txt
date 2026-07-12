@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/exchange_server.dir/src/main.cpp.o CMakeFiles/exchange_server.dir/src/thread_accept.cpp.o CMakeFiles/exchange_server.dir/src/thread_epoll.cpp.o CMakeFiles/exchange_server.dir/src/thread_gui.cpp.o CMakeFiles/exchange_server.dir/src/thread_matching.cpp.o -o exchange_server  libexchange_net.a libexchange_matching.a -lpthread 

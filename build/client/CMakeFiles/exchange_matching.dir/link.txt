@@ -1,0 +1,2 @@
+/usr/bin/ar qc libexchange_matching.a CMakeFiles/exchange_matching.dir/matching/src/order_book.cpp.o CMakeFiles/exchange_matching.dir/matching/src/matching_engine.cpp.o
+/usr/bin/ranlib libexchange_matching.a
