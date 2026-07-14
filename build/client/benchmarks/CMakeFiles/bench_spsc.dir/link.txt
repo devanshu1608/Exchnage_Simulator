@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/bench_spsc.dir/bench_spsc.cpp.o -o bench_spsc  -lpthread 
