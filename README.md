@@ -68,3 +68,32 @@ After compiling, you can run the server using:
 ```sh
 ./build/exchange_server
 ```
+
+## Using the Client
+
+The project includes an interactive client to connect to the server and send orders.
+
+1. Open a new terminal and run the client:
+```sh
+./build/client/exchange_client
+```
+
+2. When prompted, enter the connection details (IP, Port, Trader ID):
+```text
+127.0.0.1 9001 1
+```
+
+3. Once connected, you can send orders using the following formats:
+- **New Order** (`N <internal_id> <symbol_id> <BUY|SELL> <price> <qty>`):
+  ```text
+  N 1 0 BUY 100 10
+  ```
+- **Modify Order** (`M <internal_id> <symbol_id> <new_price> <new_qty>`):
+  ```text
+  M 1 0 105 10
+  ```
+- **Cancel Order** (`C <internal_id> <symbol_id>`):
+  ```text
+  C 1 0
+  ```
+*Note: `symbol_id` is a number from 0 to 4 (e.g., 0=RELIANCE, 1=TCS).*
