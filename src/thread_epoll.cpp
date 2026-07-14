@@ -9,22 +9,22 @@ namespace exchange {
 using namespace exchange::net;
 
 void runEpollThread(net::EpollMgr& epoll, SessionManager& sessions, SPSCQueue<RawMessage, 65536>& rawQueue, std::atomic<bool>& /*gRunning*/) {
-    std::printf("[Main] Starting epoll event loop\n");
+    std::printf("starting epoll event loop\n");
 
     epoll.run(
-        // onData callback
+        // on data callback
         [&](int fd) {
             ClientSession* session = sessions.getSession(fd);
             if (!session) return;
 
-            // Read all available data (edge-triggered: must drain)
+            // read all available data edge triggered
             char buf[4096];
             while (true) {
                 ssize_t n = ::recv(fd, buf, sizeof(buf), 0);
                 if (n <= 0) {
                     if (n == 0 || (n < 0 && errno != EAGAIN && errno != EWOULDBLOCK)) {
-                        // Client disconnected or error
-                        std::printf("[Main] Client fd=%d disconnected\n", fd);
+                        // client disconnected or error
+                        std::printf("client fd=%d disconnected\n", fd);
                         epoll.remove(fd);
                         sessions.remove(fd);
                         ::close(fd);
@@ -32,23 +32,23 @@ void runEpollThread(net::EpollMgr& epoll, SessionManager& sessions, SPSCQueue<Ra
                     break;
                 }
 
-                // Append to session recv buffer
+                // append to session recv buffer
                 session->recvBuffer.insert(
                     session->recvBuffer.end(), buf, buf + n);
             }
 
-            // Frame complete messages and push raw bytes to the queue.
-            // Only reads MsgHeader.length for framing — no type inspection.
+            // frame complete messages and push raw bytes to the queue
+            // only reads header length for framing
             while (session->recvBuffer.size() >= sizeof(MsgHeader)) {
                 MsgHeader header;
                 std::memcpy(&header, session->recvBuffer.data(), sizeof(MsgHeader));
 
-                // Wait for complete message
+                // wait for complete message
                 if (session->recvBuffer.size() < header.length) break;
 
-                // Sanity check
+                // sanity check
                 if (header.length > MAX_RAW_MSG_SIZE) {
-                    std::fprintf(stderr, "[Main] Oversized message (%u bytes) from fd=%d, dropping\n",
+                    std::fprintf(stderr, "oversized message (%u bytes) from fd=%d dropping\n",
                         header.length, fd);
                     session->recvBuffer.erase(
                         session->recvBuffer.begin(),
@@ -56,22 +56,22 @@ void runEpollThread(net::EpollMgr& epoll, SessionManager& sessions, SPSCQueue<Ra
                     continue;
                 }
 
-                // Push raw bytes — no parsing, no type checking
+                // push raw bytes no parsing
                 RawMessage raw;
                 raw.traderId = session->traderId;
                 raw.length   = header.length;
                 std::memcpy(raw.data, session->recvBuffer.data(), header.length);
                 rawQueue.push(raw);
 
-                // Remove processed bytes from the recv buffer
+                // remove processed bytes from the recv buffer
                 session->recvBuffer.erase(
                     session->recvBuffer.begin(),
                     session->recvBuffer.begin() + header.length);
             }
         },
-        // onDisconnect callback
+        // on disconnect callback
         [&](int fd) {
-            std::printf("[Main] Client fd=%d disconnected (EPOLLHUP/ERR)\n", fd);
+            std::printf("client fd=%d disconnected with error\n", fd);
             sessions.remove(fd);
             ::close(fd);
         }

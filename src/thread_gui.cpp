@@ -12,7 +12,7 @@ void runGuiThread(MarketState& marketState, std::atomic<bool>& gRunning) {
     while (gRunning) {
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
         std::printf("\033[2J\033[H");
-        std::printf("=== Market State (Terminal GUI) ===\n\n");
+        std::printf("market state terminal gui\n\n");
         std::printf("-----------------------------------------------------------------------\n");
         
         auto snapshot = marketState.snapshot();

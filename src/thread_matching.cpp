@@ -15,7 +15,7 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
     std::vector<OrderConfirm> confirms;
     std::vector<MdUpdate> mdUpdates;
 
-    std::printf("[Matching] Engine started\n");
+    std::printf("matching engine started\n");
 
     while (gRunning) {
         RawMessage raw;
@@ -23,12 +23,12 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
             continue;
         }
 
-        // Parse message header
+        // parse message header
         if (raw.length < sizeof(MsgHeader)) continue;
         MsgHeader header;
         std::memcpy(&header, raw.data, sizeof(MsgHeader));
 
-        // Parse wire message into internal OrderRequest
+        // parse wire message into internal order request
         OrderRequest req{};
         switch (header.type) {
         case MsgType::NewOrderRequest: {
@@ -53,7 +53,7 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
             break;
         }
         default:
-            std::fprintf(stderr, "[Matching] Unknown message type %u from trader=%u\n",
+            std::fprintf(stderr, "unknown message type %u from trader=%u\n",
                 static_cast<unsigned>(header.type), raw.traderId);
             continue;
         }
@@ -63,7 +63,7 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
 
         switch (req.m_requestType) {
         case RequestType::New:
-            std::printf("[Matching] NewOrder id=%lu symbol=%u side=%s price=%u qty=%u trader=%u\n",
+            std::printf("new order id=%lu symbol=%u side=%s price=%u qty=%u trader=%u\n",
                 req.m_orderId, req.m_symbolId,
                 req.m_side == Side::Buy ? "BUY" : "SELL",
                 req.m_price, req.m_quantity, req.m_traderId);
@@ -71,20 +71,20 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
             break;
 
         case RequestType::Cancel:
-            std::printf("[Matching] CancelOrder id=%lu symbol=%u trader=%u\n",
+            std::printf("cancel order id=%lu symbol=%u trader=%u\n",
                 req.m_orderId, req.m_symbolId, req.m_traderId);
             engine.onCancel(req.m_orderId, req.m_symbolId, req.m_traderId, confirms, mdUpdates);
             break;
 
         case RequestType::Modify:
-            std::printf("[Matching] ModifyOrder id=%lu symbol=%u newPrice=%u newQty=%u trader=%u\n",
+            std::printf("modify order id=%lu symbol=%u newPrice=%u newQty=%u trader=%u\n",
                 req.m_orderId, req.m_symbolId,
                 req.m_price, req.m_quantity, req.m_traderId);
             engine.onModify(req.m_orderId, req.m_symbolId, req.m_traderId, req.m_price, req.m_quantity, confirms, mdUpdates);
             break;
         }
 
-        // Send private confirmations to the relevant traders
+        // send private confirmations to the relevant traders
         for (const auto& confirm : confirms) {
             int fd = sessions.getFd(confirm.traderId);
             if (fd < 0) continue;
@@ -118,7 +118,7 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
             }
         }
 
-        // Multicast MarketUpdates to ALL connected clients
+        // multicast market updates to all connected clients
         for (const auto& md : mdUpdates) {
             auto msg = toMarketUpdateMsg(md);
             auto allFds = sessions.getAllFds();
@@ -127,11 +127,11 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
             }
         }
 
-        // Update market state for GUI
+        // update market state for gui
         if (req.m_requestType == RequestType::New || req.m_requestType == RequestType::Modify || req.m_requestType == RequestType::Cancel) {
             auto state = marketState.get(req.m_symbolId);
             
-            // First apply trade updates
+            // first apply trade updates
             for (const auto& confirm : confirms) {
                 if (confirm.type == OrderConfirm::Type::Trade) {
                     state.lastTradePrice = confirm.price;
@@ -140,7 +140,7 @@ void runMatchingThread(SPSCQueue<RawMessage, 65536>& rawQueue, SessionManager& s
                 }
             }
             
-            // Then apply best bid/ask
+            // then apply best bid ask
             state.bestBid = engine.getBestBidPrice(req.m_symbolId);
             state.bidVolume = engine.getBestBidQty(req.m_symbolId);
             state.bestAsk = engine.getBestAskPrice(req.m_symbolId);

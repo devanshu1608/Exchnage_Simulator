@@ -1,14 +1,4 @@
-/// @file main.cpp
-/// @brief Exchange server entry point — wires all components together.
-///
-/// Thread model:
-///   Thread 1 (Accept):   TcpServer accepts clients, login threads handle auth
-///   Thread 2 (Main):     EpollMgr reads client data, parses, pushes to SPSC queue
-///   Thread 3 (Matching): Pops from queue, matches, sends responses
-///   Thread 4 (HTTP):     Serves market data GUI dashboard
-
 #include "app_threads.hpp"
-
 #include <thread>
 #include <atomic>
 #include <cstdio>
@@ -29,46 +19,40 @@ int main() {
     std::signal(SIGINT, signalHandler);
     std::signal(SIGTERM, signalHandler);
 
-    std::puts("=== Exchange Simulator Server ===");
+    std::puts("Exchange Server");
 
-    // ── Shared state (all on stack, passed by reference) ──
     auto rawQueuePtr = std::make_unique<SPSCQueue<RawMessage, 65536>>();
     auto& rawQueue = *rawQueuePtr;
     SessionManager sessions;
     MarketState marketState;
     EpollMgr epoll;
 
-    // ── Thread 1: Accept + Login ──
+    //accepts incoming connections, adds to epoll
     std::thread acceptThread([&] {
         runAcceptThread(ORDER_PORT, sessions, epoll, gRunning);
     });
 
-    // ── Thread 3: Matching Engine ──
+    //mathing engine thread
     std::thread matchingThread([&] {
         runMatchingThread(rawQueue, sessions, marketState, gRunning);
     });
 
-    // ── Thread 4: Terminal GUI ──
+    //terminal gui thread
     std::thread guiThread([&] {
         runGuiThread(marketState, gRunning);
     });
 
-    // ── Thread 2: Main Thread — Epoll Event Loop ──
+    //epoll incoming order requests
     runEpollThread(epoll, sessions, rawQueue, gRunning);
 
-    // ── Shutdown ──
-    std::puts("[Main] Shutting down...");
-    gRunning = false;
 
-    // Note: acceptThread runs TcpServer::start() which blocks on accept().
-    // It will be interrupted when the process exits. For clean shutdown,
-    // TcpServer::stop() closes the listen socket to unblock accept().
+    std::puts("Exchange shutting down");
+    gRunning = false;
 
     matchingThread.join();
     guiThread.join();
-    // acceptThread is blocked on accept(); we detach it for clean exit
-    acceptThread.detach();
+    acceptThread.join();
 
-    std::puts("[Main] Shutdown complete.");
+    std::puts("Exchange shutdown complete");
     return 0;
 }

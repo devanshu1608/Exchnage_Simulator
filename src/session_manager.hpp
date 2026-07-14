@@ -1,15 +1,5 @@
 #pragma once
-
-/// @file session_manager.hpp
-/// @brief Thread-safe mapping of fd ↔ TraderId with per-fd receive buffers.
-///
-/// Shared between:
-///   - Accept threads (write: add sessions after login)
-///   - Main thread   (read: recv buffers + trader lookup in epoll callback)
-///   - Matching thread (read: reverse lookup fd from trader_id, get all fds for multicast)
-
 #include <types.hpp>
-
 #include <unordered_map>
 #include <vector>
 #include <mutex>

@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/thirdcook/Simulator
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/thirdcook/Simulator/build/client
+CMAKE_BINARY_DIR = /home/thirdcook/Simulator/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thirdcook/Simulator/build/client/CMakeFiles /home/thirdcook/Simulator/build/client//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thirdcook/Simulator/build/client/CMakeFiles 0
+	cd /home/thirdcook/Simulator/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/thirdcook/Simulator/build/CMakeFiles /home/thirdcook/Simulator/build/client//CMakeFiles/progress.marks
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thirdcook/Simulator/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,247 +103,39 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/thirdcook/Simulator/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named exchange_net
+# Convenience name for target.
+client/CMakeFiles/exchange_client.dir/rule:
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/exchange_client.dir/rule
+.PHONY : client/CMakeFiles/exchange_client.dir/rule
 
-# Build rule for target.
-exchange_net: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 exchange_net
-.PHONY : exchange_net
-
-# fast build rule for target.
-exchange_net/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/build
-.PHONY : exchange_net/fast
-
-#=============================================================================
-# Target rules for targets named exchange_matching
-
-# Build rule for target.
-exchange_matching: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 exchange_matching
-.PHONY : exchange_matching
-
-# fast build rule for target.
-exchange_matching/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/build
-.PHONY : exchange_matching/fast
-
-#=============================================================================
-# Target rules for targets named exchange_server
-
-# Build rule for target.
-exchange_server: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 exchange_server
-.PHONY : exchange_server
-
-# fast build rule for target.
-exchange_server/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/build
-.PHONY : exchange_server/fast
-
-#=============================================================================
-# Target rules for targets named bench_order_book
-
-# Build rule for target.
-bench_order_book: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bench_order_book
-.PHONY : bench_order_book
-
-# fast build rule for target.
-bench_order_book/fast:
-	$(MAKE) $(MAKESILENT) -f benchmarks/CMakeFiles/bench_order_book.dir/build.make benchmarks/CMakeFiles/bench_order_book.dir/build
-.PHONY : bench_order_book/fast
-
-#=============================================================================
-# Target rules for targets named bench_spsc
-
-# Build rule for target.
-bench_spsc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bench_spsc
-.PHONY : bench_spsc
-
-# fast build rule for target.
-bench_spsc/fast:
-	$(MAKE) $(MAKESILENT) -f benchmarks/CMakeFiles/bench_spsc.dir/build.make benchmarks/CMakeFiles/bench_spsc.dir/build
-.PHONY : bench_spsc/fast
-
-#=============================================================================
-# Target rules for targets named exchange_client
-
-# Build rule for target.
-exchange_client: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 exchange_client
+# Convenience name for target.
+exchange_client: client/CMakeFiles/exchange_client.dir/rule
 .PHONY : exchange_client
 
 # fast build rule for target.
 exchange_client/fast:
-	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/exchange_client.dir/build.make client/CMakeFiles/exchange_client.dir/build
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/exchange_client.dir/build.make client/CMakeFiles/exchange_client.dir/build
 .PHONY : exchange_client/fast
-
-matching/src/matching_engine.o: matching/src/matching_engine.cpp.o
-.PHONY : matching/src/matching_engine.o
-
-# target to build an object file
-matching/src/matching_engine.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/matching_engine.cpp.o
-.PHONY : matching/src/matching_engine.cpp.o
-
-matching/src/matching_engine.i: matching/src/matching_engine.cpp.i
-.PHONY : matching/src/matching_engine.i
-
-# target to preprocess a source file
-matching/src/matching_engine.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/matching_engine.cpp.i
-.PHONY : matching/src/matching_engine.cpp.i
-
-matching/src/matching_engine.s: matching/src/matching_engine.cpp.s
-.PHONY : matching/src/matching_engine.s
-
-# target to generate assembly for a file
-matching/src/matching_engine.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/matching_engine.cpp.s
-.PHONY : matching/src/matching_engine.cpp.s
-
-matching/src/order_book.o: matching/src/order_book.cpp.o
-.PHONY : matching/src/order_book.o
-
-# target to build an object file
-matching/src/order_book.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/order_book.cpp.o
-.PHONY : matching/src/order_book.cpp.o
-
-matching/src/order_book.i: matching/src/order_book.cpp.i
-.PHONY : matching/src/order_book.i
-
-# target to preprocess a source file
-matching/src/order_book.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/order_book.cpp.i
-.PHONY : matching/src/order_book.cpp.i
-
-matching/src/order_book.s: matching/src/order_book.cpp.s
-.PHONY : matching/src/order_book.s
-
-# target to generate assembly for a file
-matching/src/order_book.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_matching.dir/build.make CMakeFiles/exchange_matching.dir/matching/src/order_book.cpp.s
-.PHONY : matching/src/order_book.cpp.s
-
-net/src/epoll_mgr.o: net/src/epoll_mgr.cpp.o
-.PHONY : net/src/epoll_mgr.o
-
-# target to build an object file
-net/src/epoll_mgr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/epoll_mgr.cpp.o
-.PHONY : net/src/epoll_mgr.cpp.o
-
-net/src/epoll_mgr.i: net/src/epoll_mgr.cpp.i
-.PHONY : net/src/epoll_mgr.i
-
-# target to preprocess a source file
-net/src/epoll_mgr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/epoll_mgr.cpp.i
-.PHONY : net/src/epoll_mgr.cpp.i
-
-net/src/epoll_mgr.s: net/src/epoll_mgr.cpp.s
-.PHONY : net/src/epoll_mgr.s
-
-# target to generate assembly for a file
-net/src/epoll_mgr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/epoll_mgr.cpp.s
-.PHONY : net/src/epoll_mgr.cpp.s
-
-net/src/tcp_client.o: net/src/tcp_client.cpp.o
-.PHONY : net/src/tcp_client.o
-
-# target to build an object file
-net/src/tcp_client.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_client.cpp.o
-.PHONY : net/src/tcp_client.cpp.o
-
-net/src/tcp_client.i: net/src/tcp_client.cpp.i
-.PHONY : net/src/tcp_client.i
-
-# target to preprocess a source file
-net/src/tcp_client.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_client.cpp.i
-.PHONY : net/src/tcp_client.cpp.i
-
-net/src/tcp_client.s: net/src/tcp_client.cpp.s
-.PHONY : net/src/tcp_client.s
-
-# target to generate assembly for a file
-net/src/tcp_client.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_client.cpp.s
-.PHONY : net/src/tcp_client.cpp.s
-
-net/src/tcp_server.o: net/src/tcp_server.cpp.o
-.PHONY : net/src/tcp_server.o
-
-# target to build an object file
-net/src/tcp_server.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_server.cpp.o
-.PHONY : net/src/tcp_server.cpp.o
-
-net/src/tcp_server.i: net/src/tcp_server.cpp.i
-.PHONY : net/src/tcp_server.i
-
-# target to preprocess a source file
-net/src/tcp_server.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_server.cpp.i
-.PHONY : net/src/tcp_server.cpp.i
-
-net/src/tcp_server.s: net/src/tcp_server.cpp.s
-.PHONY : net/src/tcp_server.s
-
-# target to generate assembly for a file
-net/src/tcp_server.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_server.cpp.s
-.PHONY : net/src/tcp_server.cpp.s
-
-net/src/tcp_socket.o: net/src/tcp_socket.cpp.o
-.PHONY : net/src/tcp_socket.o
-
-# target to build an object file
-net/src/tcp_socket.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_socket.cpp.o
-.PHONY : net/src/tcp_socket.cpp.o
-
-net/src/tcp_socket.i: net/src/tcp_socket.cpp.i
-.PHONY : net/src/tcp_socket.i
-
-# target to preprocess a source file
-net/src/tcp_socket.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_socket.cpp.i
-.PHONY : net/src/tcp_socket.cpp.i
-
-net/src/tcp_socket.s: net/src/tcp_socket.cpp.s
-.PHONY : net/src/tcp_socket.s
-
-# target to generate assembly for a file
-net/src/tcp_socket.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_net.dir/build.make CMakeFiles/exchange_net.dir/net/src/tcp_socket.cpp.s
-.PHONY : net/src/tcp_socket.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/main.cpp.o
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/exchange_client.dir/build.make client/CMakeFiles/exchange_client.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -351,7 +143,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/main.cpp.i
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/exchange_client.dir/build.make client/CMakeFiles/exchange_client.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -359,104 +151,8 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/main.cpp.s
+	cd /home/thirdcook/Simulator/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/exchange_client.dir/build.make client/CMakeFiles/exchange_client.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
-
-src/thread_accept.o: src/thread_accept.cpp.o
-.PHONY : src/thread_accept.o
-
-# target to build an object file
-src/thread_accept.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_accept.cpp.o
-.PHONY : src/thread_accept.cpp.o
-
-src/thread_accept.i: src/thread_accept.cpp.i
-.PHONY : src/thread_accept.i
-
-# target to preprocess a source file
-src/thread_accept.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_accept.cpp.i
-.PHONY : src/thread_accept.cpp.i
-
-src/thread_accept.s: src/thread_accept.cpp.s
-.PHONY : src/thread_accept.s
-
-# target to generate assembly for a file
-src/thread_accept.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_accept.cpp.s
-.PHONY : src/thread_accept.cpp.s
-
-src/thread_epoll.o: src/thread_epoll.cpp.o
-.PHONY : src/thread_epoll.o
-
-# target to build an object file
-src/thread_epoll.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_epoll.cpp.o
-.PHONY : src/thread_epoll.cpp.o
-
-src/thread_epoll.i: src/thread_epoll.cpp.i
-.PHONY : src/thread_epoll.i
-
-# target to preprocess a source file
-src/thread_epoll.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_epoll.cpp.i
-.PHONY : src/thread_epoll.cpp.i
-
-src/thread_epoll.s: src/thread_epoll.cpp.s
-.PHONY : src/thread_epoll.s
-
-# target to generate assembly for a file
-src/thread_epoll.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_epoll.cpp.s
-.PHONY : src/thread_epoll.cpp.s
-
-src/thread_gui.o: src/thread_gui.cpp.o
-.PHONY : src/thread_gui.o
-
-# target to build an object file
-src/thread_gui.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_gui.cpp.o
-.PHONY : src/thread_gui.cpp.o
-
-src/thread_gui.i: src/thread_gui.cpp.i
-.PHONY : src/thread_gui.i
-
-# target to preprocess a source file
-src/thread_gui.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_gui.cpp.i
-.PHONY : src/thread_gui.cpp.i
-
-src/thread_gui.s: src/thread_gui.cpp.s
-.PHONY : src/thread_gui.s
-
-# target to generate assembly for a file
-src/thread_gui.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_gui.cpp.s
-.PHONY : src/thread_gui.cpp.s
-
-src/thread_matching.o: src/thread_matching.cpp.o
-.PHONY : src/thread_matching.o
-
-# target to build an object file
-src/thread_matching.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_matching.cpp.o
-.PHONY : src/thread_matching.cpp.o
-
-src/thread_matching.i: src/thread_matching.cpp.i
-.PHONY : src/thread_matching.i
-
-# target to preprocess a source file
-src/thread_matching.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_matching.cpp.i
-.PHONY : src/thread_matching.cpp.i
-
-src/thread_matching.s: src/thread_matching.cpp.s
-.PHONY : src/thread_matching.s
-
-# target to generate assembly for a file
-src/thread_matching.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exchange_server.dir/build.make CMakeFiles/exchange_server.dir/src/thread_matching.cpp.s
-.PHONY : src/thread_matching.cpp.s
 
 # Help Target
 help:
@@ -466,45 +162,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... bench_order_book"
-	@echo "... bench_spsc"
 	@echo "... exchange_client"
-	@echo "... exchange_matching"
-	@echo "... exchange_net"
-	@echo "... exchange_server"
-	@echo "... matching/src/matching_engine.o"
-	@echo "... matching/src/matching_engine.i"
-	@echo "... matching/src/matching_engine.s"
-	@echo "... matching/src/order_book.o"
-	@echo "... matching/src/order_book.i"
-	@echo "... matching/src/order_book.s"
-	@echo "... net/src/epoll_mgr.o"
-	@echo "... net/src/epoll_mgr.i"
-	@echo "... net/src/epoll_mgr.s"
-	@echo "... net/src/tcp_client.o"
-	@echo "... net/src/tcp_client.i"
-	@echo "... net/src/tcp_client.s"
-	@echo "... net/src/tcp_server.o"
-	@echo "... net/src/tcp_server.i"
-	@echo "... net/src/tcp_server.s"
-	@echo "... net/src/tcp_socket.o"
-	@echo "... net/src/tcp_socket.i"
-	@echo "... net/src/tcp_socket.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/thread_accept.o"
-	@echo "... src/thread_accept.i"
-	@echo "... src/thread_accept.s"
-	@echo "... src/thread_epoll.o"
-	@echo "... src/thread_epoll.i"
-	@echo "... src/thread_epoll.s"
-	@echo "... src/thread_gui.o"
-	@echo "... src/thread_gui.i"
-	@echo "... src/thread_gui.s"
-	@echo "... src/thread_matching.o"
-	@echo "... src/thread_matching.i"
-	@echo "... src/thread_matching.s"
 .PHONY : help
 
 
@@ -516,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/thirdcook/Simulator/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

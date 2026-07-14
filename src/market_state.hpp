@@ -1,19 +1,11 @@
 #pragma once
-
-/// @file market_state.hpp
-/// @brief Tracks current market state per instrument.
-///
-/// Updated by the matching thread after each trade.
-/// Read by the HTTP server thread to serve the web GUI.
-
 #include <types.hpp>
-
 #include <array>
 #include <mutex>
 
 namespace exchange {
 
-/// Current state of a single instrument.
+//used by terminal gui thread to print the current state of market
 struct InstrumentState {
     Price     bestBid{0};
     Price     bestAsk{0};
@@ -24,10 +16,9 @@ struct InstrumentState {
     Quantity  totalTradedVolume{0};
 };
 
-/// Thread-safe market state container.
 class MarketState {
 public:
-    /// Update state for a single instrument. Called by matching thread.
+
     void update(SymbolId symbol, const InstrumentState& state) {
         std::lock_guard<std::mutex> lock(mtx);
         if (symbol < MAX_INSTRUMENTS) {
@@ -35,7 +26,6 @@ public:
         }
     }
 
-    /// Get state for a single instrument. Called by HTTP thread.
     InstrumentState get(SymbolId symbol) const {
         std::lock_guard<std::mutex> lock(mtx);
         if (symbol < MAX_INSTRUMENTS) {
@@ -44,7 +34,6 @@ public:
         return {};
     }
 
-    /// Atomic snapshot of all instruments. Called by HTTP thread.
     std::array<InstrumentState, MAX_INSTRUMENTS> snapshot() const {
         std::lock_guard<std::mutex> lock(mtx);
         return instruments;

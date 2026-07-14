@@ -53,10 +53,6 @@ target_link_libraries(exchange_server PRIVATE
 )
 
 
-# ─── Benchmarks ───
-if(EXISTS "${CMAKE_SOURCE_DIR}/benchmarks/CMakeLists.txt")
-    add_subdirectory(benchmarks)
-endif()
 
 # ─── Client ───
 if(EXISTS "${CMAKE_SOURCE_DIR}/client/CMakeLists.txt")
