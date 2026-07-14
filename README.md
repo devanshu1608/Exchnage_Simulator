@@ -8,20 +8,34 @@ The exchange server is built using a multi-threaded architecture to ensure low l
 
 ```mermaid
 flowchart TD
-    Client1[Client] <-->|TCP| Accept[Accept Thread]
-    Client2[Client] <-->|TCP| Epoll[Epoll Event Loop Thread]
+    subgraph External
+        Trader[Client]
+    end
+
+    subgraph Server [Exchange Server]
+        Accept[Accept Thread]
+        Epoll[Epoll Event Loop Thread]
+        SessionManager[(Session Manager)]
+        SPSC[SPSC Queue]
+        Matching[Matching Engine Thread]
+        MarketState[(Market State)]
+        GUI[GUI Thread]
+    end
+
+    Trader -->|1. Connect & Login| Accept
+    Trader -->|2. Send Orders| Epoll
     
     Accept -.->|Register FD| Epoll
-    Accept -.->|Register Trader| SessionManager[(Session Manager)]
+    Accept -.->|Register Trader| SessionManager
     
-    Epoll -->|Raw Message| SPSC[SPSC Queue]
+    Epoll -->|Raw Message| SPSC
     
-    SPSC -->|Pop Raw Message| Matching[Matching Engine Thread]
+    SPSC -->|Pop Raw Message| Matching
     
-    Matching -.->|Update| MarketState[(Market State)]
-    Matching -->|Send Confirms & MD| Client2
+    Matching -.->|Update| MarketState
+    Matching -->|3. Send Confirms & MD| Trader
     
-    MarketState -.->|Read Snapshot| GUI[GUI Thread]
+    MarketState -.->|Read Snapshot| GUI
     GUI -->|Print| Terminal[Terminal Output]
 ```
 
